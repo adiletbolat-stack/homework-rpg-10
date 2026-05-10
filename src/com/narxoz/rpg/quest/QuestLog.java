@@ -1,7 +1,6 @@
 package com.narxoz.rpg.quest;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,31 +11,29 @@ import java.util.List;
  */
 public class QuestLog {
 
-    private final List<Quest> quests = new ArrayList<>();
+    private final List<Quest> quests;
 
-    public void add(Quest quest) {
-        if (quest != null) {
-            quests.add(quest);
-        }
+    public QuestLog() {
+        this.quests = new ArrayList<>();
     }
 
-    public int size() {
-        return quests.size();
+    public void addQuest(Quest quest) {
+        quests.add(quest);
     }
 
-    public QuestIterator ordered() {
-        return new OrderedQuestIterator(this);
+    public QuestIterator iterator() {
+        return new OrderedQuestIterator(quests);
     }
 
-    public QuestIterator reverse() {
-        return new ReverseQuestIterator(this);
+    public QuestIterator reverseIterator() {
+        return new ReverseQuestIterator(quests);
     }
 
-    public QuestIterator priorityAtLeast(QuestPriority threshold) {
-        return new PriorityQuestIterator(this, threshold);
+    public QuestIterator priorityIterator() {
+        return new PriorityQuestIterator(quests);
     }
 
-    List<Quest> snapshot() {
-        return Collections.unmodifiableList(new ArrayList<>(quests));
+    public QuestIterator rewardSortedIterator() {
+        return new RewardSortedQuestIterator(quests);
     }
 }

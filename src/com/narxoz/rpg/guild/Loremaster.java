@@ -1,9 +1,9 @@
 package com.narxoz.rpg.guild;
 
-public class Scout extends GuildMember {
+public class Loremaster extends GuildMember {
 
-    public Scout(String name) {
-        super(name, "scout");
+    public Loremaster(String name) {
+        super(name, "lore");
     }
 
     @Override
@@ -13,34 +13,33 @@ public class Scout extends GuildMember {
     ) {
 
         System.out.println(
-                "\n[Scout " + getName() + "]"
+                "\n[Loremaster " + getName() + "]"
         );
 
         System.out.println(
-                "Received field assignment from "
+                "Archiving guild knowledge from "
                         + senderTopic
         );
 
         System.out.println(
-                "MISSION: " + message
+                "ARCHIVE ENTRY: " + message
         );
     }
 
-
-    public void reportDanger(String report) {
+    public void archiveNotice(String note) {
 
         System.out.println(
-                "\n[Scout " + getName() + "]"
+                "\n[Loremaster " + getName() + "]"
         );
 
         System.out.println(
-                "Sending danger report..."
+                "Submitting archive notice..."
         );
 
         getMediator().dispatch(
                 getTopic(),
                 "captain",
-                report
+                note
         );
     }
 }

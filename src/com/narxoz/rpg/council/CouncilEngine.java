@@ -8,10 +8,6 @@ import com.narxoz.rpg.quest.QuestLog;
 
 import java.util.List;
 
-/**
- * Orchestrates a planning session that uses
- * both Iterator and Mediator patterns.
- */
 public class CouncilEngine {
 
     public CouncilRunResult runCouncil(
@@ -24,22 +20,15 @@ public class CouncilEngine {
         int messagesRouted = 0;
         int membersNotified = 0;
 
-        System.out.println("=================================");
-        System.out.println("      COUNCIL SESSION START      ");
+        System.out.println("\n=================================");
+        System.out.println("      COUNCIL SESSION START");
         System.out.println("=================================");
 
-        System.out.println("\nParty members:");
-        for (Hero hero : party) {
-            System.out.println("- " + hero.getName());
-        }
 
-        /*
-         * ITERATOR #1
-         * Ordered traversal
-         */
         System.out.println("\n=== ORDERED QUEST REVIEW ===");
 
-        QuestIterator orderedIterator = questLog.iterator();
+        QuestIterator orderedIterator =
+                questLog.iterator();
 
         while (orderedIterator.hasNext()) {
 
@@ -55,7 +44,7 @@ public class CouncilEngine {
             hall.dispatch(
                     "captain",
                     "scout",
-                    "Scout the area for quest: "
+                    "Scout terrain for quest: "
                             + quest.getTitle()
             );
 
@@ -71,23 +60,10 @@ public class CouncilEngine {
 
             messagesRouted++;
             membersNotified++;
-
-            hall.dispatch(
-                    "captain",
-                    "healer",
-                    "Prepare healing support for: "
-                            + quest.getTitle()
-            );
-
-            messagesRouted++;
-            membersNotified++;
         }
 
-        /*
-         * ITERATOR #2
-         * Priority quests only
-         */
-        System.out.println("\n=== PRIORITY QUEST STRATEGY ===");
+   
+        System.out.println("\n=== PRIORITY QUEST REVIEW ===");
 
         QuestIterator priorityIterator =
                 questLog.priorityIterator();
@@ -99,7 +75,7 @@ public class CouncilEngine {
             questsTraversed++;
 
             System.out.println(
-                    "\nPriority council discussion: "
+                    "\nPriority Quest: "
                             + quest.getTitle()
             );
 
@@ -113,36 +89,32 @@ public class CouncilEngine {
             messagesRouted++;
 
             /*
-             * All guild members are notified.
-             * Using party size as visible demo metric.
+             * Approximate broadcast count
              */
             membersNotified += party.size();
         }
 
-        /*
-         * ITERATOR #3
-         * Reverse order retrospective
-         */
-        System.out.println("\n=== REVERSE ORDER REVIEW ===");
+    
+        System.out.println("\n=== HIGH REWARD ANALYSIS ===");
 
-        QuestIterator reverseIterator =
-                questLog.reverseIterator();
+        QuestIterator rewardIterator =
+                questLog.rewardSortedIterator();
 
-        while (reverseIterator.hasNext()) {
+        while (rewardIterator.hasNext()) {
 
-            Quest quest = reverseIterator.next();
+            Quest quest = rewardIterator.next();
 
             questsTraversed++;
 
             System.out.println(
-                    "Retrospective discussion: "
+                    "\nHigh reward opportunity: "
                             + quest.getTitle()
             );
 
             hall.dispatch(
                     "captain",
                     "lore",
-                    "Archive council notes for: "
+                    "Archive reward data for: "
                             + quest.getTitle()
             );
 
@@ -151,7 +123,7 @@ public class CouncilEngine {
         }
 
         System.out.println("\n=================================");
-        System.out.println("       COUNCIL SESSION END       ");
+        System.out.println("       COUNCIL SESSION END");
         System.out.println("=================================");
 
         return new CouncilRunResult(
